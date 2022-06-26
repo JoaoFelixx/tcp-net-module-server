@@ -1,5 +1,6 @@
 const net = require('net');
-const process = require('process');
+const readline = require('readline')
+const { stdin, stdout } = require('process');
 const { host, port } = require('./config')
 
 const client = new net.Socket();
@@ -13,14 +14,16 @@ client.on('data', (chunk) =>
 client.on('end', () =>
   console.log('Requested an end to the TCP connection'));
 
-process.stdin
-  .on('readable', () => {
-    let message = process.stdin.read()
+const writer = readline.createInterface({
+  input: stdin,
+  output: stdout,
+})
 
-    message = message.toString().replace(/\n/, '');
+writer.on('line', (message) => {
+  message = message.toString().replace(/\n/, '');
 
-    if (message === '.exit')
-      client.end();
+  if (message === '.exit')
+    client.end();
 
-    client.write(message);
-  })
+  client.write(message);
+})
