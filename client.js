@@ -20,8 +20,6 @@ const writer = readline.createInterface({
 })
 
 writer.on('line', (message) => {
-  message = message.toString().replace(/\n/, '');
-
   if (message === '.exit')
     client.end();
 
