@@ -1,0 +1,12 @@
+{
+  "name": "tcp-core-server",
+  "version": "1.0.0",
+  "main": "server.js",
+
+  "scripts": {
+    "server": "node server.js",
+    "client": "node client.js"
+  },
+  "author": "Felix developer <felixxdeveloper@gmail.com>",
+  "license": "MIT"
+}

@@ -1,15 +1,21 @@
 const net = require('net');
 const { port } = require('./config');
-
+const connections = [];
 const server = new net.Server();
 
 server.listen(port, () => console.log(`Server listening for requests on localhost:${port}`));
 
 server.on('connection', function (socket) {
-  socket.write('Hello, client.');
+  connections.push(socket)
 
   socket.on('data', (chunk) =>
-    console.log(`Data received from client: ${chunk.toString()}`));
+    connections.forEach(connection => {
+      if (connection === socket)
+        return
+
+      connection.write(chunk)
+    })
+  )
 
   socket.on('end', () =>
     console.log('Closing connection with the client'));
