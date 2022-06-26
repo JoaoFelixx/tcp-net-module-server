@@ -8,8 +8,7 @@ const client = new net.Socket();
 client.connect({ port, host }, () =>
   console.log('TCP connection established with the server.'));
 
-client.on('data', (chunk) =>
-  console.log(`Data received from the server: ${chunk.toString()}.`));
+client.on('data', (chunk) => console.log(chunk.toString()));
 
 client.on('end', () =>
   console.log('Requested an end to the TCP connection'));

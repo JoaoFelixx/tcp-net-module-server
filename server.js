@@ -8,12 +8,14 @@ server.listen(port, () => console.log(`Server listening for requests on localhos
 server.on('connection', function (socket) {
   connections.push(socket)
 
+  socket.name = `${socket.remoteAddress}:${socket.remotePort}`
+
   socket.on('data', (chunk) =>
     connections.forEach(connection => {
       if (connection === socket)
         return
 
-      connection.write(chunk)
+      connection.write(`${socket.name} > ${chunk}`)
     })
   )
 
